@@ -6,7 +6,7 @@ const PLANT_DATABASE = [
         idealHumidity: { min: 60, max: 80 },
         spaceNeeded: "medium",
         harvestTime: "60-80 dias",
-        image: "Imagens/tomateceveja",
+        image: "Imagens/tomateceveja.jpg",
         tips: ["Regar a cada 2 dias", "Necessita de sol pleno", "Adubar a cada 15 dias"],
         sunExposure: "full"
     },
