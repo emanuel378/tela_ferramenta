@@ -1,0 +1,13 @@
+<!-- plant-icon-verde-completo.svg -->
+<svg width="48" height="48" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#003300">
+    <!-- Vaso superior -->
+    <rect x="20" y="40" width="24" height="6" rx="2" />
+    <!-- Vaso inferior -->
+    <path d="M24 46h16l-2 10a4 4 0 0 1-4 3h-4a4 4 0 0 1-4-3l-2-10z" />
+    <!-- Folha esquerda -->
+    <path d="M32 38c-1-8-6-14-14-14 0 10 7 14 14 14z" />
+    <!-- Folha direita -->
+    <path d="M32 38c1-8 6-14 14-14 0 10-7 14-14 14z" />
+  </g>
+</svg>

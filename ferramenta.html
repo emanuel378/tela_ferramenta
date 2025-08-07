@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Que Plantar? - Recomendação Inteligente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+     <header class="top-bar">
+    <div class="logo">
+      <img src="Imagens/logo.png" alt="WASTECH Logo">
+    </div>
+    <div class="contact-info">
+      <span><i class="fas fa-phone"></i> (88) 93423-4323</span>
+      <span><i class="fas fa-envelope"></i> wastech@gmail.com</span>
+      <span><i class="fas fa-map-marker-alt"></i> São Paulo, Brasil</span>
+    </div>
+    <div class="top-icons">
+      <span><i class="fas fa-bell"></i> Notificações</span>
+      <span><i class="fas fa-shopping-cart"></i> Carrinho</span>
+      <div class="profile-container">
+        <div class="profile">
+          <img src="Imagens/LEO.png" alt="Usuário">
+          <span>Leonardo <i class="fas fa-chevron-down dropdown-icon"></i></span>
+        </div>
+        <div class="dropdown-menu">
+          <a href="#"><i class="fas fa-user"></i> Meu Perfil</a>
+          <a href="#"><i class="fas fa-cog"></i> Configurações</a>
+          <a href="#"><i class="fas fa-question-circle"></i> Ajuda</a>
+          <div class="divider"></div>
+          <a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="menu-bar">
+    <a href="#"><i class="fas fa-home"></i> Início</a>
+    <a href="#"><i class="fas fa-star"></i> Recursos</a>
+    <a href="#"><i class="fas fa-seedling"></i> Plantas</a>
+    <a href="#"><i class="fas fa-calendar-alt"></i> Calendário</a>
+    <a href="#"><i class="fas fa-shopping-basket"></i> Loja</a>
+    <a href="#"><i class="fas fa-headset"></i> Suporte</a>
+    <a href="#"><i class="fas fa-book"></i> Guias</a>
+    <a href="#"><i class="fas fa-exclamation-circle"></i> Sobre</a>
+    <input type="text" placeholder="Pesquisar..." class="search-box">
+  </nav>
+
+  <div class="heard2">
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container py-5">
+        <div class="text-center mb-4">
+            <img src="Imagens/satelite.webp" alt="Imagem de satélite da Terra" style="max-width:180px; width:100%; margin-bottom:18px; border-radius:12px;">
+        </div>
+        <div class="text-center mb-5">
+            <h1 class="display-4">🌱 O Que Plantar?</h1>
+            <p class="lead">Recomendações precisas baseadas em dados de satélite da NASA</p>
+            <span class="nasa-badge">
+                <svg xmlns="" width="12" height="12" fill="currentColor" class="bi bi-rocket me-1" viewBox="0 0 16 16">
+                    <path d="M14 16a8 8 0 0 0 0-16v16zM9.5 3h2L12 4.5h2.5L9.5 0v3zm-2 0h-2L4 4.5H1.5L7.5 0v3z"/>
+                </svg>
+                Dados da NASA POWER API
+            </span>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Configurações</h5>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Localização</label>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" id="location-input" placeholder="Digite sua cidade">
+                                <button class="btn btn-outline-secondary" id="detect-location" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="form-text">Ou selecione no mapa</div>
+                            <div id="map" class="mt-2" style="height: 200px; background-color: #eee; border-radius: 8px;"></div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="space-type" class="form-label">Tipo de Espaço</label>
+                            <select class="form-select" id="space-type">
+                                <option value="small">Vaso/Pequeno (até 1m²)</option>
+                                <option value="medium">Varanda/Médio (1-5m²)</option>
+                                <option value="large">Quintal/Grande (+5m²)</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-success w-100 py-2" id="get-suggestions">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search me-1" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                            Ver Sugestões
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8">
+                <div class="d-none" id="results-section">
+                    <div class="card mb-4 climate-card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-3">
+                                <img src="Imagens/logoopen.png" alt="NASA POWER" style="height:32px;vertical-align:middle;margin-right:8px;">
+                                Condições Climáticas - Dados Satélite NASA
+                            </h5>
+                            <div class="chart-container" style="height: 260px;">
+                                <canvas id="climateChart"></canvas>
+                            </div>
+                            <p class="text-muted small mt-2 text-center">
+                                <span class="nasa-badge">NASA POWER API</span> Dados dos últimos 30 dias e previsão
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4 planting-calendar">
+                        <div class="card-body">
+                            <h5 class="card-title">Calendário de Plantio</h5>
+                            <p class="text-muted small">Melhores dias para plantar baseados nas condições climáticas</p>
+                            
+                            <div class="d-flex gap-3 mb-3">
+                                <div>
+                                    <span class="badge good-status me-2"></span>
+                                    <small>Bom para plantar</small>
+                                </div>
+                                <div>
+                                    <span class="badge neutral-status me-2"></span>
+                                    <small>Condições regulares</small>
+                                </div>
+                                <div>
+                                    <span class="badge bad-status me-2"></span>
+                                    <small>Não recomendado</small>
+                                </div>
+                            </div>
+                            
+                            <div class="calendar-grid" id="planting-calendar">
+                                <!-- Calendário será gerado aqui -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Plantas Recomendadas</h5>
+                            <div class="row g-4" id="plants-container">
+                                <!-- Plantas serão inseridas aqui -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Dicas Personalizadas</h5>
+                            <div id="personal-tips"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center py-5" id="empty-state">
+                    <img src="Imagens/logoopen.png" 
+                         alt="Imagem de satélite da Terra" class="img-fluid rounded mb-3" style="max-height: 200px;">
+                    <h4>Descubra o que plantar em sua região</h4>
+                    <p class="text-muted">Informe sua localização para receber recomendações baseadas em dados de satélite</p>
+                </div>
+            </div>
+        </div>
+    </div>
+     <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-left">
+          <img
+            src="Imagens/logo.png"
+            alt="Wastech Logo"
+            class="logo"
+          />
+        </div>
+
+        <nav class="footer-nav">
+          <a href="#">Comunidade</a>
+          <a href="#">Sobre Nós</a>
+          <a href="#">Gamificação</a>
+          <a href="#">Página Inicial</a>
+          <a href="#">Dashboard</a>
+        </nav>
+
+        <div class="footer-social">
+          <a href="#"><img src="Imagens/insta-icon.svg" alt="Instagram" /></a>
+          <a href="#"><img src="Imagens/yt-icon.svg" alt="YouTube" /></a>
+        </div>
+      </div>
+      <hr class="footer-divider" />
+      <div class="footer-bottom">
+        <p class="copyright">© 2025 WastTech. Todos os Direitos Reservados.</p>
+        <div class="footer-links">
+          <a href="#">Políticas de Privacidade</a>
+          <a href="#">Termos de Serviço</a>
+        </div>
+        <img src="Imagens/planta3.svg" alt="Ícone Planta" class="footer-icon" />
+      </div>
+    </footer>
+
+
+
+
+
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>
